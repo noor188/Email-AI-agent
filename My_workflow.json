@@ -1,0 +1,395 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "custom",
+              "cronExpression": "*/5 * * * *\t"
+            }
+          ]
+        },
+        "filters": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "0b226521-f887-49f0-a53f-0e354d1dfcc1",
+      "name": "Gmail Trigger",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "TXMnqsKgf8I22GBB",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "inputText": "=subject:{{ $json.Subject }}\nemail:{{ $json.snippet }}",
+        "categories": {
+          "categories": [
+            {
+              "category": "Promotion",
+              "description": "This is an email looking to sell me things"
+            },
+            {
+              "category": "Social",
+              "description": "Any email from a social media site like Facebook, Youtube or Instagram"
+            },
+            {
+              "category": "Personal ",
+              "description": "An email send from a friend, family member or something personal "
+            },
+            {
+              "category": "Sales",
+              "description": "Anything regarding clients sending over documents , sales etc"
+            },
+            {
+              "category": "Interview",
+              "description": "Invitation for an interview"
+            },
+            {
+              "category": "Receipts ",
+              "description": "These are transaction emails for receipts "
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textClassifier",
+      "typeVersion": 1,
+      "position": [
+        220,
+        0
+      ],
+      "id": "8227c74c-8e38-4b59-b1c4-16c261c22545",
+      "name": "Text Classifier"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "claude-3-7-sonnet-20250219",
+          "cachedResultName": "Claude 3.7 Sonnet"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.3,
+      "position": [
+        220,
+        220
+      ],
+      "id": "dfdae668-dd65-4e09-aef5-d39e217fc16a",
+      "name": "Anthropic Chat Model",
+      "credentials": {
+        "anthropicApi": {
+          "id": "44kNnio92lyq05vq",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_6781241099154781890"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        780,
+        -440
+      ],
+      "id": "1822734e-29b1-4176-aeef-4f694a11030e",
+      "name": "Gmail",
+      "webhookId": "57e9c2e5-5fb2-44bc-acb3-99200f07656d",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "TXMnqsKgf8I22GBB",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_6781241099154781890"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        780,
+        -260
+      ],
+      "id": "ab177329-7010-46a9-bd66-e5a52097f2fb",
+      "name": "Gmail1",
+      "webhookId": "57e9c2e5-5fb2-44bc-acb3-99200f07656d",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "TXMnqsKgf8I22GBB",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_6781241099154781890"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        780,
+        -80
+      ],
+      "id": "4c41cdcd-31f7-4669-bbb0-fceb184f4f92",
+      "name": "Gmail2",
+      "webhookId": "57e9c2e5-5fb2-44bc-acb3-99200f07656d",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "TXMnqsKgf8I22GBB",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_6781241099154781890"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        780,
+        120
+      ],
+      "id": "9dd28b6c-4a51-474f-a18f-c3eadbd43b42",
+      "name": "Gmail3",
+      "webhookId": "57e9c2e5-5fb2-44bc-acb3-99200f07656d",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "TXMnqsKgf8I22GBB",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_6781241099154781890"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        780,
+        320
+      ],
+      "id": "fa1b5d17-63c5-42f0-9077-c5254ae10273",
+      "name": "Gmail4",
+      "webhookId": "57e9c2e5-5fb2-44bc-acb3-99200f07656d",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "TXMnqsKgf8I22GBB",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_6781241099154781890"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        780,
+        520
+      ],
+      "id": "dc482c70-1681-4cf4-a889-1522d6868f45",
+      "name": "Gmail5",
+      "webhookId": "57e9c2e5-5fb2-44bc-acb3-99200f07656d",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "TXMnqsKgf8I22GBB",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "markAsRead",
+        "messageId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1000,
+        -440
+      ],
+      "id": "f1c915ab-0147-4224-99f6-05faf4500443",
+      "name": "Gmail6",
+      "webhookId": "37200f09-f3d8-4947-bf1d-49d718114dd6",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "TXMnqsKgf8I22GBB",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Gmail Trigger": [
+      {
+        "json": {
+          "id": "197001cadd98703b",
+          "threadId": "197001cadd98703b",
+          "snippet": "this is a social email",
+          "payload": {
+            "mimeType": "text/html"
+          },
+          "sizeEstimate": 67690,
+          "historyId": "3209474",
+          "internalDate": "1748053568000",
+          "labels": [
+            {
+              "id": "INBOX",
+              "name": "INBOX"
+            },
+            {
+              "id": "CATEGORY_UPDATES",
+              "name": "CATEGORY_UPDATES"
+            },
+            {
+              "id": "UNREAD",
+              "name": "UNREAD"
+            }
+          ],
+          "From": "Spectrum <no-reply@tbjobalerts.com>",
+          "To": "noormmlk@gmail.com",
+          "Subject": "New jobs at Spectrum"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anthropic Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Text Classifier": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail": {
+      "main": [
+        [
+          {
+            "node": "Gmail6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail1": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "4459b237-bf86-4cd9-b57c-4347f0a39595",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "872a57a8d662437453ff867d7614e000922ca2fb75f772f5fa5a05301613101e"
+  },
+  "id": "G7IGVUewLhMVvEAe",
+  "tags": []
+}
