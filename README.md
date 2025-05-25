@@ -10,7 +10,7 @@ Run email account
 # 🖼️ Agent workflow
 <img src="https://github.com/KingJohn12/Email-AGI-agent/blob/main/image/Work_flow.png" height=200 width=800>
 <hr>
-<img src="https://github.com/KingJohn12/Email-AGI-agent/blob/main/image/n8n_workflow.png" height=500 width=800>
+<img src="https://github.com/noor188/Email-AI-agent/blob/main/image/n8n_platform__workflow.png" height=500 width=800>
 
 ## 💻 Technology
 
@@ -26,7 +26,7 @@ upload My_workflow.json file into n8n platform
 --- 
 
 # Demo
-<a src="https://youtu.be/2SYyscbL2BY">https://youtu.be/2SYyscbL2BY</a>
+<a src="https://youtu.be/6FxagkZI5r4">https://youtu.be/2SYyscbL2BY</a>
 
 
 ## 🔍 Our Overview of the Email AI agent
