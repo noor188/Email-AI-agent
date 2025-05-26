@@ -36,7 +36,7 @@ upload My_workflow.json file into n8n platform
 - Levaraging AI to solve problems
 - Automating repetitive tasks 
 
-### Our suggestions:
+### My suggestions:
 
 - Add more actions
 - Expand to include old and new emails
