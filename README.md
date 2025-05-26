@@ -4,7 +4,7 @@ An agentic System to automate end-to-end emails workflow. This agent was build d
 
 ## 💸 Business Outcome
 
-Run email account
+Reduce time spent on manually sorting a Gmail account
 
 --- 
 # 🖼️ Agent workflow
