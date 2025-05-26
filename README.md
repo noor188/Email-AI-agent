@@ -31,12 +31,14 @@ upload My_workflow.json file into n8n platform
 
 ## 🔍 Our Overview of the Email AI agent
 
-### What We liked:
+### What I liked:
 
-- points
+- Levaraging AI to solve problems
+- Automating repetitive tasks 
 
 ### Our suggestions:
 
-- points
+- Add more actions
+- Expand to include old and new emails
 
 --- 
