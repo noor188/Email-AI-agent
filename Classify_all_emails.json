@@ -1,0 +1,234 @@
+{
+  "name": "Classify_Emails",
+  "nodes": [
+    {
+      "parameters": {
+        "jsCode": "return $input.all().map(item => {\n  const html =  $input.first().json.html|| \"\";\n  let text = html\n    .replace(/<[^>]*>/g, ' ')       // Remove HTML tags\n    .replace(/&nbsp;/g, ' ')        // Handle non-breaking space\n    .replace(/&amp;/g, '&')         // Handle ampersand\n    .replace(/&lt;/g, '<')          // Less than\n    .replace(/&gt;/g, '>')          // Greater than\n    .replace(/\\s+/g, ' ')           // Collapse whitespace\n    .trim();                        // Remove extra spaces\n\n  return {\n    json: {\n      plainText: text\n    }\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -400,
+        -20
+      ],
+      "id": "21cee032-ecf6-4bc1-b2d5-39a205895e35",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "You receive plain text from an email, and it's your role to classify that email into one of 7 categories:\n\nThe 7 categories are:\n\n- job-rejection: label: Label_4742321951675855827\n- interview: label: Label_6677812752356646923\n- confirmation: label: Label_5850854911711446006\n- advice: label: Label_1478811391214934818\n- job-roles: label: Label_115552578555067190\n- promotion: label: Label_7241119421767200329\n- sale: label: Label_8043084734448553551\n\n- job rejection (Label_4742321951675855827) is an email with a rejection for a job\n- interview (Label_6677812752356646923) is an email next steps for an interview either phone, code, take to home project\n- confirmation (Label_5850854911711446006) is an email with a job application submission confirmation\n- advice (Label_1478811391214934818) is an email with advices for my job hunt, career\n- job roles (Label_115552578555067190) is an email with a list of jobs to apply for\n- promotion (Label_7241119421767200329) is an email with anything involving promotion or trying to sell me something\n- sale (Label_8043084734448553551) is an email that has sales\n\nOutput in JSON with the following structure:\n\n{\n   \"category\": \"Label_4742321951675855827/Label_6677812752356646923/Label_5850854911711446006/Label_1478811391214934818/Label_115552578555067190/Label_7241119421767200329/Label_7241119421767200329\"\n}\n\noutput only one category ",
+              "role": "system"
+            },
+            {
+              "content": "=<plainText>\n {{ $json.plainText }}\n</plainText>"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        20,
+        -20
+      ],
+      "id": "5917e9a8-6599-4578-9509-974971472e18",
+      "name": "OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "FDRs0r2G5iRbnCsg",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail3').item.json.id }}",
+        "labelIds": "={{ $json.message.content.category }}"
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        360,
+        -20
+      ],
+      "id": "8e6e7073-dabe-40a2-83f2-a2f60d351207",
+      "name": "Gmail1",
+      "webhookId": "3159bd70-644b-4446-a30a-7188fc2bfff7",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "TXMnqsKgf8I22GBB",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1120,
+        -40
+      ],
+      "id": "cb8277a4-c919-4813-adc3-df3b48205f94",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "simple": false,
+        "filters": {
+          "q": "-label:job-rejection -label:interview -label:confirmation -label:advice -label: job-roles -label:promotion -label:sale"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -900,
+        -40
+      ],
+      "id": "b2a0591d-3b5e-419a-a21a-1abbcf790ca8",
+      "name": "Gmail3",
+      "webhookId": "d402e3b9-f8cd-4c3c-833d-fc3c5dac3175",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "TXMnqsKgf8I22GBB",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 25
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -160,
+        -20
+      ],
+      "id": "302e6acc-eac0-4459-87c4-0882784ac0b9",
+      "name": "Wait",
+      "webhookId": "6014b69d-5419-4f94-86be-6fc9469a15fc"
+    },
+    {
+      "parameters": {
+        "options": {
+          "reset": false
+        }
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -680,
+        -40
+      ],
+      "id": "569d500a-c428-472c-9912-549a457beb33",
+      "name": "Loop Over Items"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Gmail1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Gmail3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail3": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "3f5d581e-bd5f-4569-9f75-2da59afa2790",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "872a57a8d662437453ff867d7614e000922ca2fb75f772f5fa5a05301613101e"
+  },
+  "id": "qhrE69o0AsguYiaB",
+  "tags": []
+}
